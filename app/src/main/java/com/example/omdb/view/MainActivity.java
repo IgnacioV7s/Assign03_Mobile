@@ -2,7 +2,6 @@ package com.example.omdb.view;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -15,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.omdb.R;
 import com.example.omdb.model.OMDbModel;
 import com.example.omdb.viewmodel.OMDbViewModel;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+
+        //Firebase Connections
+        FirebaseApp.initializeApp(this);
+        //FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         EditText textMovie = findViewById(R.id.appSearch);
         Button myButton = findViewById(R.id.appSearchBtn);
@@ -48,12 +53,9 @@ public class MainActivity extends AppCompatActivity {
             myAdapter.notifyDataSetChanged();
         });
 
-        myButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String movie = textMovie.getText().toString();
-                viewModel.Refresh(movie);
-            }
+        myButton.setOnClickListener(view -> {
+            String movie = textMovie.getText().toString();
+            viewModel.Refresh(movie);
         });
     }
 }

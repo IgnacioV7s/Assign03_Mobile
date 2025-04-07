@@ -1,11 +1,12 @@
 package com.example.omdb.model;
 
 public class OMDbModel {
-    private String imdbID, title, type, urlImg, gender, director, actors, synopsis, rate, lengthMovie, year;
+    private String idFirebase, imdbID, title, type, urlImg, gender, director, actors, synopsis, rate, lengthMovie, year;
 
     public OMDbModel() {
     }
-    public OMDbModel(String imdbID, String actors, String director, String gender, String lengthMovie, String rate, String synopsis, String title, String type, String urlImg, String year) {
+    public OMDbModel(String idFirebase, String imdbID, String actors, String director, String gender, String lengthMovie, String rate, String synopsis, String title, String type, String urlImg, String year) {
+        this.idFirebase = idFirebase;
         this.imdbID = imdbID;
         this.actors = actors;
         this.director = director;
@@ -18,6 +19,8 @@ public class OMDbModel {
         this.urlImg = urlImg;
         this.year = year;
     }
+    public String getIdFirebase(){ return idFirebase; }
+    public void setIdFirebase(String idFirebase) { this.idFirebase = idFirebase; }
     public  String getImdbID() {
         return imdbID;
     }
