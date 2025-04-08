@@ -19,33 +19,45 @@ import com.example.omdb.viewmodel.OMDbViewModel;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MovieDetail extends AppCompatActivity {
-    Button btnAdd;
+    //Declare the XML Elements
+    Button btnAdd, backButton;
+    TextView movieTitle, movieYearAndLength, movieGender, movieDirector, movieActors, movieSynopsis, movieRate;
+    ImageView moviePoster;
     OMDbViewModel viewModel;
+
+    //Declare  variable
     OMDbModel OMDb;
     final CreateMovie addMovie = new CreateMovie();
-    private String moviePosterUrl;
+    String moviePosterUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_details);
 
+        //Connect variables to the XML elements IDs.
+        moviePoster = findViewById(R.id.moviePoster);
+        movieTitle = findViewById(R.id.movieTitle);
+        movieYearAndLength = findViewById(R.id.movieYearAndLength);
+        movieGender = findViewById(R.id.movieGender);
+        movieDirector = findViewById(R.id.movieDirector);
+        movieActors = findViewById(R.id.movieActors);
+        movieSynopsis = findViewById(R.id.movieSinopsis);
+        movieRate = findViewById(R.id.movieRate);
+        backButton = findViewById(R.id.btnBack);
         btnAdd = findViewById(R.id.btnFavoriteDetail);
 
+        //Firebase Connections
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        //Intent variable that retrieves the IMDb ID
         Intent intDetailMovie = getIntent();
         String IMDbID = intDetailMovie.getStringExtra("IMDbID");
+
+        // Obtains the ViewModel instance to interact with movie data (OMDb)
         viewModel = new ViewModelProvider(this).get(OMDbViewModel.class);
 
-        ImageView moviePoster = findViewById(R.id.moviePoster);
-        TextView movieTitle = findViewById(R.id.movieTitle);
-        TextView movieYearAndLength = findViewById(R.id.movieYearAndLength);
-        TextView movieGender = findViewById(R.id.movieGender);
-        TextView movieDirector = findViewById(R.id.movieDirector);
-        TextView movieActors = findViewById(R.id.movieActors);
-        TextView movieSynopsis = findViewById(R.id.movieSinopsis);
-        TextView movieRate = findViewById(R.id.movieRate);
-        Button backButton = findViewById(R.id.btnBack);
-
+        // Observes the filtered movie data and updates the UI when the data changes
         viewModel.getOMDbDataFilter().observe(this, movie -> {
             String yearAndLength = movie.getYear() + " - " + movie.getLengthMovie();
             String actors = "Actors: " + movie.getActors();
@@ -62,17 +74,19 @@ public class MovieDetail extends AppCompatActivity {
                     .load(movie.getUrlImg())
                     .into(moviePoster);
 
-            // Almacenar la URL en la variable global
             moviePosterUrl = movie.getUrlImg();
         });
 
+        // Calls the method to get the movie data by its IMDb ID
         viewModel.GetMovieByID(IMDbID);
 
+        //Button that return MainActivity page
         backButton.setOnClickListener(v -> {
             Intent intentobj = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intentobj);
         });
 
+        //Button that add a new movie to favorite
         btnAdd.setOnClickListener(v -> {
             OMDb = new OMDbModel();
 
@@ -87,7 +101,6 @@ public class MovieDetail extends AppCompatActivity {
             OMDb.setTitle(movieTitle.getText().toString());
             OMDb.setUrlImg(moviePosterUrl);
 
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
             addMovie.addNewFavoriteMovie(db, OMDb, isSuccessful -> {
                 if (isSuccessful) {
                     Toast.makeText(MovieDetail.this, "New movie added to favorites", Toast.LENGTH_SHORT).show();

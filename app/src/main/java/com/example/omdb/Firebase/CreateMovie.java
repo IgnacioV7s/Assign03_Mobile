@@ -1,25 +1,18 @@
 package com.example.omdb.Firebase;
 
-import static android.content.ContentValues.TAG;
-
-import android.util.Log;
-
-import androidx.annotation.NonNull;
-
 import com.example.omdb.model.OMDbModel;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class CreateMovie {
+    //Callback interface that captures the result from addNewFavoriteMovie.
     public interface NewDocumentCallback {
         void onNewDocument(boolean isSuccessful);
     }
 
+    //Method that creates a new document in the IMDb Collection.
     public void addNewFavoriteMovie(FirebaseFirestore db, OMDbModel OMDb, NewDocumentCallback callback) {
         Map<String, Object> newMovie = getStringObjectMap(OMDb);
 
@@ -29,6 +22,7 @@ public class CreateMovie {
                 .addOnFailureListener(e -> callback.onNewDocument(false));
     }
 
+    //Map<String, Object> structured to create a new document in Firebase.
     private static Map<String, Object> getStringObjectMap(OMDbModel OMDb) {
         Map<String, Object> newMovie = new HashMap<>();
         newMovie.put("imdbID", OMDb.getImdbID());

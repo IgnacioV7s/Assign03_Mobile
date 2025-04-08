@@ -1,9 +1,5 @@
 package com.example.omdb.Firebase;
 
-import static android.content.ContentValues.TAG;
-
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.example.omdb.model.OMDbModel;
@@ -16,17 +12,19 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class GetMovie {
+    //Callback interface that captures the result from GetAllMovies.
     public interface FirestoreCallback {
         void onCallback(List<OMDbModel> movies);
     }
 
+    //Callback interface that captures the result from GetMovieByFirebaseID.
     public interface FirestoreCallbackID {
         void onCallbackID(OMDbModel getMovieByID);
     }
 
+    //Method that returns all movies from IMDb the collection.
     public void GetAllMovies(FirebaseFirestore db, FirestoreCallback callback) {
         db.collection("/IMDb")
                 .get()
@@ -53,12 +51,14 @@ public class GetMovie {
                             }
                             callback.onCallback(listGetMovie);
                         } else {
-                            Log.w(TAG, "Error getting documents.", task.getException());
+                            List<OMDbModel> listNull = new ArrayList<>();
+                            callback.onCallback(listNull);
                         }
                     }
                 });
     }
 
+    //Method that returns a specific movie filtered by ID from the IMDb collection.
     public void GetMovieByFirebaseID(FirebaseFirestore db, String firebaseID, FirestoreCallbackID callback) {
         db.collection("IMDb") // Nombre de la colección
                 .document(firebaseID) // ID único del documento

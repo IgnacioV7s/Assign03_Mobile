@@ -16,11 +16,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class RegisterActivity extends AppCompatActivity {
+    //Declare the XML Elements
     Button btnRegister;
     EditText textEmail, textPassword;
-    private FirebaseAuth mAuth;
-    private FirebaseUser user;
-    private RegisterAccount register = new RegisterAccount();
+
+    //Declare and initialize a new class
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    FirebaseUser user;
+    RegisterAccount register = new RegisterAccount();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,13 +31,12 @@ public class RegisterActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_register);
 
-        //Authentication Firebase Process
-        mAuth = FirebaseAuth.getInstance();
-
+        //Connect variables to the XML elements IDs.
         btnRegister = findViewById(R.id.buttonCreateAccount);
         textEmail = findViewById(R.id.textEmail);
         textPassword = findViewById(R.id.textPassword);
 
+        //Button that creates a new user in Firebase.
         btnRegister.setOnClickListener(view -> register.registerUser(mAuth, textEmail.getText().toString(), textPassword.getText().toString(), isSuccessful -> {
             if(isSuccessful) {
                 Toast.makeText(RegisterActivity.this, "Account created successfully", Toast.LENGTH_SHORT).show();
