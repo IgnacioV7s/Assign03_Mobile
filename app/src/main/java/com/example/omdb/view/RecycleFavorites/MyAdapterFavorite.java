@@ -1,4 +1,4 @@
-package com.example.omdb.view;
+package com.example.omdb.view.RecycleFavorites;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,16 +12,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.omdb.R;
 import com.example.omdb.model.OMDbModel;
-import com.example.omdb.view.DetailsMovies.MovieDetail;
-
+import com.example.omdb.view.DetailSpecificMovie.FavoriteMovie;
+import com.example.omdb.view.ItemClickListener;
 import java.util.List;
 
-public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
-    private final List<OMDbModel> items;
-    private final Context context;
-    private ItemClickListener clickListener;
+public class MyAdapterFavorite extends RecyclerView.Adapter<MyViewHolderFavorite> {
+    final List<OMDbModel> items;
+    final Context context;
+    ItemClickListener clickListener;
 
-    public MyAdapter(List<OMDbModel> items, Context context) {
+    public MyAdapterFavorite(List<OMDbModel> items, Context context) {
         this.items = items;
         this.context = context;
     }
@@ -32,13 +32,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyViewHolderFavorite onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.movie_info, parent, false);
-        return new MyViewHolder(itemView, clickListener);
+        return new MyViewHolderFavorite(itemView, clickListener);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolderFavorite holder, int position) {
         OMDbModel movieOMDb = items.get(position);
 
         holder.title.setText(movieOMDb.getTitle());
@@ -56,8 +56,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
             view.setPressed(false);
 
-            Intent intent = new Intent(context, MovieDetail.class);
-            intent.putExtra("IMDbID", movieOMDb.getImdbID());
+            Intent intent = new Intent(context, FavoriteMovie.class);
+            intent.putExtra("FirebaseID", movieOMDb.getIdFirebase());
             context.startActivity(intent);
         });
     }
@@ -67,3 +67,4 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         return items.size();
     }
 }
+

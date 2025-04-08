@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="16dp"
+    android:background="@color/black"
+    tools:context=".view.DetailSpecificMovie.FavoriteMovie">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+    <!-- Póster de la película -->
+    <ImageView
+        android:id="@+id/favoriteMoviePoster"
+        android:layout_width="200dp"
+        android:layout_height="300dp"
+        android:scaleType="centerCrop"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Título de la película -->
+    <TextView
+        android:id="@+id/favoriteMovieTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="22sp"
+        android:textColor="#f5c518"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- Año y duración -->
+    <TextView
+        android:id="@+id/favoriteMovieYearAndLength"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="#ffffff"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- Género -->
+    <TextView
+        android:id="@+id/favoriteMovieGender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="#f5c518"
+        android:textSize="16sp"
+        android:textStyle="italic"
+        android:gravity="center"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- Director -->
+    <TextView
+        android:id="@+id/favoriteMovieDirector"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#ffffff"
+        android:text=""
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- Actores -->
+    <TextView
+        android:id="@+id/favoriteMovieActors"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#f5c518"
+        android:text=""
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- Sinopsis -->
+    <TextView
+        android:id="@+id/favoriteMovieSinopsis"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#ffffff"
+        android:text=""
+        android:textSize="16sp"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- Calificación IMDb -->
+    <TextView
+        android:id="@+id/favoriteMovieRate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textStyle="bold"
+        android:textColor="#FFD700"
+        android:layout_marginBottom="8dp"/>
+
+
+    <!-- Botón para volver -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/updateBtn"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:backgroundTint="#f5c518"
+            android:textColor="@color/black"
+            android:text="Update" />
+
+        <Button
+            android:id="@+id/removeBtn"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#f5c518"
+            android:textColor="@color/black"
+            android:text="Remove" />
+    </LinearLayout>
+</LinearLayout>
+
+
+</ScrollView>

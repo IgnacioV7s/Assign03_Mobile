@@ -18,8 +18,8 @@ import com.google.firebase.auth.FirebaseAuth;
 public class LoginActivity extends AppCompatActivity {
     EditText textUser, passwordUser;
     Button btnSignInAccount, btnRedirectToRegister;
-    private FirebaseAuth mAuth;
-    private final LoginAccount login = new LoginAccount();
+    FirebaseAuth mAuth;
+    final LoginAccount login = new LoginAccount();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,4 +60,3 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 }
-

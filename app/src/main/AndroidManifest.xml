@@ -15,6 +15,12 @@
         android:theme="@style/Theme.OMDb"
         tools:targetApi="31">
         <activity
+            android:name=".view.DetailSpecificMovie.FavoriteMovie"
+            android:exported="false" />
+        <activity
+            android:name=".view.FavoriteMovie.ListFavoriteMovie"
+            android:exported="false" />
+        <activity
             android:name=".view.Register.RegisterActivity"
             android:exported="false" />
         <activity
@@ -27,12 +33,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.MovieDetail"
+            android:name=".view.DetailsMovies.MovieDetail"
             android:exported="false" />
         <activity
             android:name=".view.MainActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true" />
     </application>
 
 </manifest>

@@ -6,6 +6,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.omdb.model.OMDbModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
@@ -15,33 +16,32 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CreateMovie {
-    public void createNewDocument(FirebaseFirestore db) {
-        Map<String, Object> newMovie = getStringObjectMap();
+    public interface NewDocumentCallback {
+        void onNewDocument(boolean isSuccessful);
+    }
+
+    public void addNewFavoriteMovie(FirebaseFirestore db, OMDbModel OMDb, NewDocumentCallback callback) {
+        Map<String, Object> newMovie = getStringObjectMap(OMDb);
 
         db.collection("IMDb")
                 .add(newMovie)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
-                    }
-                });
+                .addOnSuccessListener(documentReference -> callback.onNewDocument(true))
+                .addOnFailureListener(e -> callback.onNewDocument(false));
     }
 
-    private static Map<String, Object> getStringObjectMap() {
+    private static Map<String, Object> getStringObjectMap(OMDbModel OMDb) {
         Map<String, Object> newMovie = new HashMap<>();
-        newMovie.put("title", "Transformers: Dark of the Moon");
-        newMovie.put("director", "Martin Scorsese");
-        newMovie.put("poster", "https://m.media-amazon.com/images/M/MV5BMTkwOTY0MTc1NV5BMl5BanBnXkFtZTcwMDQwNjA2NQ@@._V1_SX300.jpg");
-        newMovie.put("source", "Internet Movie Database");
-        newMovie.put("value", "6.2");
-        newMovie.put("plot", "When oil is discovered in 1920s Oklahoma under Osage Nation land, the Osage people are murdered one by one - until the FBI steps in to unravel the mystery.");
+        newMovie.put("imdbID", OMDb.getImdbID());
+        newMovie.put("title", OMDb.getTitle());
+        newMovie.put("director", OMDb.getDirector());
+        newMovie.put("poster", OMDb.getUrlImg());
+        newMovie.put("source", OMDb.getRate());
+        newMovie.put("plot", OMDb.getSynopsis());
+        newMovie.put("actor", OMDb.getActors());
+        newMovie.put("gender", OMDb.getGender());
+        newMovie.put("year", OMDb.getYear());
+        newMovie.put("length", OMDb.getLengthMovie());
+
         return newMovie;
     }
 }
